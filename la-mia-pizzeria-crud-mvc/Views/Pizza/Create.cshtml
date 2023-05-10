@@ -1,0 +1,39 @@
+﻿@model PizzaFormModel
+
+<div class="container">
+    <form asp-controller="Pizza" asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+        <div class="mb-3">
+            <strong>Nome:</strong>
+            <input asp-for="Pizzas.Name" class="d-block w-100" />
+            <span asp-validation-for="Pizzas.Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <strong>Descrizione:</strong>
+            <input asp-for="Pizzas.Description" class="d-block w-100" />
+            <span asp-validation-for="Pizzas.Description" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <strong>Prezzo:</strong>
+            <input asp-for="Pizzas.Price" class="d-block w-100" />
+            <span asp-validation-for="Pizzas.Price" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <strong>Link Immagine:</strong>
+            <input asp-for="Pizzas.Image" class="d-block w-100" />
+            <span asp-validation-for="Pizzas.Image" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <strong>Categoria:</strong>
+            <select asp-for="Pizzas.CategoryId" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
+                <option value=""></option>
+            </select>
+            <span asp-validation-for="Pizzas.CategoryId" class="text-danger"></span>
+        </div>
+
+        <div class="text-end">
+            <input type="submit" class="btn btn-small btn-info" value="Save">
+        </div>
+    </form>
+</div>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using la_mia_pizzeria_crud_mvc.Models;
+using Microsoft.Extensions.Logging;
 
 namespace la_mia_pizzeria_crud_mvc.Controllers
 {
@@ -11,7 +12,7 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
         {
             using (DataContext db = new())
             {
-                List<Pizzas> pizzas = db.Pizzas.OrderBy(pizzas => pizzas.Id).Include(pizzas => pizzas.Categories).ToList<Pizzas>();
+                List<Pizzas> pizzas = db.Pizzas.OrderBy(pizzas => pizzas.Id).Include(pizzas => pizzas.Category).ToList<Pizzas>();
 
                 return View("Index", pizzas);
             }
@@ -23,9 +24,56 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
         {
             using (DataContext db = new())
             {
-                Pizzas? pizzas = db.Pizzas.Where(pizzas => pizzas.Id == id).Include(pizzas => pizzas.Categories).FirstOrDefault();
+                Pizzas? pizzas = db.Pizzas.Where(pizzas => pizzas.Id == id).Include(pizzas => pizzas.Category).FirstOrDefault();
 
                 return View("Details", pizzas);
+            }
+        }
+
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            using DataContext db = new();
+            List<Category> categories = db.Categories.ToList();
+            PizzaFormModel model = new()
+            {
+                Pizzas = new Pizzas(),
+                Categories = categories
+            };
+
+            return View("Create", model);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(PizzaFormModel data)
+        {
+            if (!ModelState.IsValid)
+            {
+                using DataContext db = new();
+                List<Category> categories = db.Categories.ToList();
+                data.Categories = categories;
+                return View(data);
+            }
+
+            using (DataContext db = new())
+            {
+                Pizzas pizza = new()
+                {
+                    Name = data?.Pizzas?.Name,
+                    Description = data?.Pizzas?.Description,
+                    Price = data?.Pizzas?.Price ?? 0,
+                    Image = data?.Pizzas?.Image,
+
+                    CategoryId = data?.Pizzas?.CategoryId ?? 0
+                };
+
+                db.Pizzas.Add(pizza);
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
             }
         }
     }

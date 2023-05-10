@@ -36,13 +36,7 @@ namespace la_mia_pizzeria_crud_mvc.Migrations
                         .HasColumnType("nvarchar(32)")
                         .HasColumnName("name");
 
-                    b.Property<int>("PizzaId")
-                        .HasColumnType("int")
-                        .HasColumnName("pizzas_id");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("PizzaId");
 
                     b.ToTable("categories");
                 });
@@ -55,6 +49,9 @@ namespace la_mia_pizzeria_crud_mvc.Migrations
                         .HasColumnName("id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -80,23 +77,25 @@ namespace la_mia_pizzeria_crud_mvc.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("pizzas");
-                });
-
-            modelBuilder.Entity("la_mia_pizzeria_crud_mvc.Models.Category", b =>
-                {
-                    b.HasOne("la_mia_pizzeria_crud_mvc.Models.Pizzas", "Pizza")
-                        .WithMany("Categories")
-                        .HasForeignKey("PizzaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Pizza");
                 });
 
             modelBuilder.Entity("la_mia_pizzeria_crud_mvc.Models.Pizzas", b =>
                 {
-                    b.Navigation("Categories");
+                    b.HasOne("la_mia_pizzeria_crud_mvc.Models.Category", "Category")
+                        .WithMany("Pizzas")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("la_mia_pizzeria_crud_mvc.Models.Category", b =>
+                {
+                    b.Navigation("Pizzas");
                 });
 #pragma warning restore 612, 618
         }

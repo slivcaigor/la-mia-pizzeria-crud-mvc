@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Menu Page";
     @model List<Pizzas>
+
 }
 
 @if (Model == null || !Model.Any())
@@ -11,6 +12,8 @@ else
 {
     <!-- component -->
     <div class="h-screen bg-black flex items-center justify-center">
+
+        <a href="@Url.Action("Create", "Pizza")" class="btn btn-danger py-1 px-2 mt-2 fs-5 mb-3">Create Pizza</a>
 
         <div class="grid grid-cols-6 gap-2 px-16">
             @foreach (var card in Model)
@@ -34,9 +37,9 @@ else
 
                     <!-- Category Tags -->
                     <div class="flex flex-row flex-wrap gap-2">
-                        @foreach (var category in card.Categories ?? Enumerable.Empty<Category>())
-                        {
-                            <div class="hover:bg-gray-600 text-gray-300 text-xs font-semibold bg-gray-700 px-2 py-1 rounded-full">@category.Name</div>
+                        @if (card.Category != null)
+                        { 
+                           <div class="hover:bg-gray-600 text-gray-300 text-xs font-semibold bg-gray-700 px-2 py-1 rounded-full">@card.Category.Name</div>
                         }
                     </div>
                 </div>
@@ -44,6 +47,3 @@ else
         </div>
     </div>
 }
-
-    
-

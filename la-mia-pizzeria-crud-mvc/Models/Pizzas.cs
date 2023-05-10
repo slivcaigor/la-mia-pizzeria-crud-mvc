@@ -7,7 +7,7 @@ namespace la_mia_pizzeria_crud_mvc.Models
     [Table("pizzas")]
     public class Pizzas
     {
-        [Key] 
+        [Key]
         [Column("id")]
         public int Id { get; set; }
 
@@ -15,19 +15,24 @@ namespace la_mia_pizzeria_crud_mvc.Models
         [Column("name")]
         [MaxLength(32)]
         public string? Name { get; set; }
+
         [Required]
         [Column("description")]
         [MaxLength(500)]
         public string? Description { get; set; }
+
         [Required]
         [Column("image")]
         public string? Image { get; set; }
+
         [Required]
         [Column("price")]
         [Precision(9, 2)]
         public decimal Price { get; set; }
 
-        [InverseProperty("Pizza")]
-        public List<Category>? Categories { get; set; }
+        public int CategoryId { get; set; }
+
+        [ForeignKey("CategoryId")]
+        public Category? Category { get; set; }
     }
 }

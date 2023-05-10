@@ -8,16 +8,15 @@
             <p class="card-text">@Model.Description</p>
             <h6>$ @Model.Price</h6>
             <p>
-                
-                @if (Model.Categories != null && Model.Categories.Count > 0)
+                @if (Model.CategoryId != null)
                 {
-                    <strong>Category:</strong>
-                    @foreach (var category in Model.Categories)
-                    {
-                        <span>@category.Name</span>
-                    }
+                    <strong>Categories:</strong>
+                    <span>@Model.Category.Name</span>
                 }
-                
+                else
+                {
+                    <span>No categories selected</span>
+                }
             </p>
         </div>
     </div>
