@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Menu Page";
+    @model List<Pizzas>
+}
+
+@if (Model == null || !Model.Any())
+{
+    <h3>No pizzas available at the moment.</h3>
+}
+else
+{
+    <!-- component -->
+    <div class="h-screen bg-black flex items-center justify-center">
+
+        <div class="grid grid-cols-6 gap-2 px-16">
+            @foreach (var card in Model)
+            {
+                <!-- Item 1 -->
+                <div class="flex flex-col gap-1">
+
+                    <!-- Image -->
+                    <a href="@Url.Action("Details", "Pizza", new{id=@card.Id})" class="bg-purple-500">
+                        <img src="@card.Image?? '404.png'" alt="@card.Name" class="hover:translate-x-1 hover:-translate-y-1 delay-50 duration-100" />
+                    </a>
+
+                    <!-- Games Title -->
+                    <a href="#" class="hover:text-purple-500 text-gray-200 font-semibold">
+                        @card.Name
+                        <span class="badge badge-secondary">$ @card.Price</span>
+                    </a>
+
+                    <!-- Viewers -->
+                    <a href="#" class="hover:text-purple-500 text-sm text-gray-400 -mt-1">@card.Description</a>
+
+                    <!-- Category Tags -->
+                    <div class="flex flex-row flex-wrap gap-2">
+                        @foreach (var category in card.Categories ?? Enumerable.Empty<Category>())
+                        {
+                            <div class="hover:bg-gray-600 text-gray-300 text-xs font-semibold bg-gray-700 px-2 py-1 rounded-full">@category.Name</div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+    
+

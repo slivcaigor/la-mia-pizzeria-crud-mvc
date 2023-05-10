@@ -1,0 +1,24 @@
+﻿@model Pizzas
+
+<div class="container">
+    <div class="card">
+        <img class="w-48" src="@Model.Image" alt="@Model.Name">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Name</h5>
+            <p class="card-text">@Model.Description</p>
+            <h6>$ @Model.Price</h6>
+            <p>
+                
+                @if (Model.Categories != null && Model.Categories.Count > 0)
+                {
+                    <strong>Category:</strong>
+                    @foreach (var category in Model.Categories)
+                    {
+                        <span>@category.Name</span>
+                    }
+                }
+                
+            </p>
+        </div>
+    </div>
+</div>
