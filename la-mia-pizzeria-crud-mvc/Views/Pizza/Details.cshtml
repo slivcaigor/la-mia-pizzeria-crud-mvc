@@ -2,6 +2,8 @@
 
 <div class="container">
     <div class="card">
+        <a href="@Url.Action("Update", "Pizza", new { id = Model.Id })">Modifica</a>
+
         <img class="w-48" src="@Model.Image" alt="@Model.Name">
         <div class="card-body">
             <h5 class="card-title">@Model.Name</h5>

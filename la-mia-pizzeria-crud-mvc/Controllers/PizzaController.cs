@@ -79,6 +79,66 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
                 return RedirectToAction("Index");
             }
         }
+
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            using (DataContext db = new())
+            {
+                Pizzas pizza = db.Pizzas.Where(pizza => pizza.Id == id).FirstOrDefault();
+
+                if (pizza == null)
+                    return NotFound();
+
+                else
+                {
+                    List<Category> categories = db.Categories.ToList();
+
+                    PizzaFormModel model = new();
+                    model.Pizzas = pizza;
+                    model.Categories = categories;
+
+                    return View(model);
+                }
+            }
+
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public IActionResult Update(int id, PizzaFormModel data)
+        {
+            if (!ModelState.IsValid)
+            {
+                using DataContext db = new();
+                List<Category> categories = db.Categories.ToList();
+                data.Categories = categories;
+                return View("Update", data);
+            }
+
+            using (DataContext db = new())
+            {
+                Pizzas pizza = db.Pizzas.Where(pizza => pizza.Id == id).FirstOrDefault();
+
+                if (pizza != null)
+                {
+                    pizza.Name = data.Pizzas.Name;
+                    pizza.Description = data.Pizzas.Description;
+                    pizza.Price = data.Pizzas.Price;
+                    pizza.CategoryId = data.Pizzas.CategoryId;
+
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+        }
     }
 }
 
