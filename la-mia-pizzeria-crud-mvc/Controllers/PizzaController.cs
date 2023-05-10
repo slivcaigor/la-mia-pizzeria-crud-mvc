@@ -66,9 +66,12 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
                     Description = data?.Pizzas?.Description,
                     Price = data?.Pizzas?.Price ?? 0,
                     Image = data?.Pizzas?.Image,
-
-                    CategoryId = data?.Pizzas?.CategoryId ?? 0
                 };
+
+                if (data.Pizzas.CategoryId != null)
+                {
+                    pizza.CategoryId = data.Pizzas.CategoryId;
+                }
 
                 db.Pizzas.Add(pizza);
                 db.SaveChanges();

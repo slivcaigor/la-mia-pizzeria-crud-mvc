@@ -11,28 +11,28 @@ namespace la_mia_pizzeria_crud_mvc.Models
         [Column("id")]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Il nome è obbligatorio")]
         [Column("name")]
         [MaxLength(32)]
         public string? Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "La descrizione è obbligatoria")]
         [Column("description")]
         [MaxLength(500)]
         public string? Description { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Il link all'immagine è obbligatorio")]
         [Column("image")]
         public string? Image { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Il prezzo è obbligatorio")]
         [Column("price")]
         [Precision(9, 2)]
         public decimal Price { get; set; }
 
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
 
         [ForeignKey("CategoryId")]
-        public Category? Category { get; set; }
+        public Category?Category { get; set; }
     }
 }

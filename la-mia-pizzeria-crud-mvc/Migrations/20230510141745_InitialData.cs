@@ -33,7 +33,7 @@ namespace la_mia_pizzeria_crud_mvc.Migrations
                     description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     image = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     price = table.Column<decimal>(type: "decimal(9,2)", precision: 9, scale: 2, nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -42,8 +42,7 @@ namespace la_mia_pizzeria_crud_mvc.Migrations
                         name: "FK_pizzas_categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "categories",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateIndex(
