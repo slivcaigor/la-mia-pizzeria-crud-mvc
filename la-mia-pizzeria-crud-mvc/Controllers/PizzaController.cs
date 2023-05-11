@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using la_mia_pizzeria_crud_mvc.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace la_mia_pizzeria_crud_mvc.Controllers
 {
@@ -43,7 +43,7 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
         }
 
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Create()
         {
@@ -68,6 +68,7 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
             return View("Create", model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(PizzaFormModel data)
@@ -127,7 +128,7 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
         }
 
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Update(int id)
         {
@@ -168,7 +169,7 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
         }
 
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Update(int id, PizzaFormModel data)
@@ -238,7 +239,7 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
             }
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)

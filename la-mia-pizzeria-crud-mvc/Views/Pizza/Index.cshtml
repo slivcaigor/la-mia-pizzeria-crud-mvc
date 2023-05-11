@@ -14,7 +14,12 @@ else
     <!-- component -->
     <div class="h-screen bg-black flex items-center justify-center">
 
-        <a href="@Url.Action("Create", "Pizza")" class="btn btn-danger py-1 px-2 mt-2 fs-5 mb-3">Create Pizza</a>
+
+        @if (User.IsInRole("Admin"))
+        {
+            <a href="@Url.Action("Create", "Pizza")" class="btn btn-danger py-1 px-2 mt-2 fs-5 mb-3">Create Pizza</a>
+        }
+
 
         <div class="grid grid-cols-6 gap-2 px-16">
             @foreach (var card in Model)
