@@ -3,10 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace la_mia_pizzeria_crud_mvc
 {
-    public class DataContext : DbContext
+    public class PizzaContext : DbContext
     {
-        public DbSet<Pizzas> Pizzas { get; set; }
+        public DbSet<Pizza> Pizza { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Ingredient> Ingredients { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=pizzadex;Integrated Security=True;TrustServerCertificate=True");
 

@@ -1,5 +1,9 @@
-﻿@model Pizzas
-
+﻿@model Pizza
+@if (Model == null)
+{
+    <h1>Pizza not found</h1>
+}else
+{
 <div class="container">
     <div class="card">
         <a href="@Url.Action("Update", "Pizza", new { id = Model.Id })">Modifica</a>
@@ -22,6 +26,23 @@
                     <span>No categories selected</span>
                 }
             </p>
+            <p>
+                <strong>Ingredients:</strong>
+                @if (Model.Ingredients != null && Model.Ingredients.Any())
+                {
+                    <ul>
+                        @foreach (var ingredient in Model.Ingredients)
+                        {
+                            <li>@ingredient.Name</li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <span>No ingredients selected</span>
+                }
+            </p>
         </div>
     </div>
 </div>
+}

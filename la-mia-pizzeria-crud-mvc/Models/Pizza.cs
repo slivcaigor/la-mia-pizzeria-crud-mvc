@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace la_mia_pizzeria_crud_mvc.Models
 {
-    [Table("pizzas")]
-    public class Pizzas
+    [Table("pizza")]
+    public class Pizza
     {
         [Key]
         [Column("id")]
@@ -33,6 +33,8 @@ namespace la_mia_pizzeria_crud_mvc.Models
         public int? CategoryId { get; set; }
 
         [ForeignKey("CategoryId")]
-        public Category?Category { get; set; }
+        public Category? Category { get; set; }
+
+        public List<Ingredient>? Ingredients { get; set; }
     }
 }
