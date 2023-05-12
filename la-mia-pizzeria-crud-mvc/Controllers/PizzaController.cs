@@ -9,18 +9,28 @@ namespace la_mia_pizzeria_crud_mvc.Controllers
     public class PizzaController : Controller
     {
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(int pageNumber = 1, int pageSize = 6)
         {
             using PizzaContext db = new();
-            List<Pizza> pizzas = db.Pizza.OrderBy(pizza => pizza.Id).Include(pizza => pizza.Category).ToList();
+            List<Pizza> pizzas = db.Pizza
+                .OrderBy(pizza => pizza.Id)
+                .Include(pizza => pizza.Category)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
 
             if (pizzas.Count == 0)
             {
                 ViewBag.Message = "We have eaten all the pizzas!";
             }
+
+            int totalPizzas = db.Pizza.Count();
+            ViewData["TotalPizzas"] = totalPizzas;
+            ViewBag.PageSize = pageSize;
+            ViewBag.CurrentPage = pageNumber;
+
             return View("Index", pizzas);
         }
-
 
 
         [HttpGet]
